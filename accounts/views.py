@@ -17,7 +17,7 @@ def login_view(request):
                 if user.is_active:
                     login(request, user)
                     # Vitali in Development -> Redirect to Home View
-                    return redirect('home')
+                    return redirect('/')
             else:
                 return render(request, 'accounts/login.html', {'form': form})
     else:
@@ -33,7 +33,7 @@ def register(request):
                 email=request.POST.get('email'),
                 password=request.POST.get('password')
             )
-            return redirect('auth:login')
+            return redirect('/')
         else:
             return render(request, 'accounts/register.html', {'form': form})
     else:
@@ -43,4 +43,4 @@ def register(request):
 def logout_view(request):
     logout(request)
     # Vitali in Development -> Redirect to Home View
-    return redirect('home')
+    return redirect('/')

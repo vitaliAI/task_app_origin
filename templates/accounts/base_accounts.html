@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+ {% include 'accounts/_accounts_header.html' %}
+  <body class="layout-centered bg-img" style="background-image: url(../static/img/bg/);">
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="bg-white rounded shadow-7 w-400 mw-100 p-6">
+        <h5 class="mb-7">Sign into your account</h5>
+        <form>
+          <div class="form-group">
+            <input type="text" class="form-control" name="username" placeholder="Username">
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" name="password" placeholder="Password">
+          </div>
+          <div class="form-group flexbox py-3">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" checked>
+              <label class="custom-control-label">Remember me</label>
+            </div>
+            <a class="text-muted small-2" href="user-recover.html">Forgot password?</a>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-block btn-primary" type="submit">Login</button>
+          </div>
+        </form>
+        <div class="divider">Or Login With</div>
+        <div class="text-center">
+        </div>
+
+        <hr class="w-30">
+
+        <p class="text-center text-muted small-2">Don't have an account? <a href="user-register.html">Register here</a></p>
+      </div>
+
+    </main><!-- /.main-content -->
+
+  {% include 'accounts/_accounts_footer.html' %}
+
+  </body>
+</html>

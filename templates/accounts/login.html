@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+ {% include 'accounts/_accounts_header.html' %}
+  <body class="layout-centered bg-img" style="background-image: url(/static/img/bg/9.jpg);">
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="bg-white rounded shadow-7 w-400 mw-100 p-6">
+        <h5 class="mb-7">Sign into your:  Task Tracking Account</h5>
+        <form method="POST">{% csrf_token %}
+            <div class="form-group">
+                {{ form }}
+            </div>
+          <div class="form-group">
+            <button class="btn btn-block btn-primary" type="submit">Login</button>
+          </div>
+        </form>
+        <div class="divider">Or Create an Account with</div>
+        <div class="text-center">
+          <img class="logo-dark img-responsive" src="{% static 'img/logo-origin.png' %}" alt="logo">
+        </div>
+        <hr class="w-30">
+        <p class="text-center text-muted small-2">Don't have an account? <a href="{% url 'accounts:accounts_register' %}">Register here</a></p>
+      </div>
+    </main><!-- /.main-content -->
+  {% include 'accounts/_accounts_footer.html' %}
+  </body>
+</html>

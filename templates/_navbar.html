@@ -1,0 +1,25 @@
+{% load static %}
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark" data-navbar="fixed">
+  <div class="container">
+    <div class="navbar-left">
+      <button class="navbar-toggler" type="button">&#9776;</button>
+      <a class="navbar-brand" href="#">
+        <img class="logo-dark img-responsive" src="{% static 'img/origin_logo.png' %}" alt="logo">
+        <img class="logo-light" src="{% static 'img/Odolena.png' %}" alt="logo">
+      </a>
+    </div>
+    <section class="navbar-mobile">
+      <nav class="nav nav-navbar nav-text-normal mr-auto">
+      </nav>
+      <div class="d-flex align-items-center">
+        {% if user.is_authenticated %}
+        <a class="btn btn-sm btn-link text-dark ml-lg-5 mr-2" href="{% url 'logout' %}">Logout</a>
+        {% else %}
+        <a class="btn btn-sm btn-success" href="{% url 'register' %}">Sign up</a>
+        <a class="btn btn-sm btn-link text-dark ml-lg-5 mr-2" href="{% url 'login' %}">Login</a>
+        {% endif %}
+       </div>
+    </section>
+  </div>
+</nav><!-- /.navbar -->

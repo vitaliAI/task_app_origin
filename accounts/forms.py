@@ -68,6 +68,6 @@ class RegistrationForm(forms.Form):
 
         # Check if password has provided and also if confirmation matches
         if password and password != password_confirmation:
-            raise forms.ValidationError("Passwords don;t match")
+            raise forms.ValidationError("Passwords don't match")
 
         return self.cleaned_data
