@@ -4,6 +4,16 @@ from django.utils import timezone
 from django.urls import reverse
 
 
+class TaskManagerActive(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_finished=False)
+
+
+class TaskManagerDone(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_finished=True)
+
+
 class Task(models.Model):
     title = models.CharField(max_length=128, blank=True, null=True)
     description = models.TextField(blank=True)
@@ -11,6 +21,10 @@ class Task(models.Model):
     finished_at = models.DateTimeField(null=True)
     is_finished = models.BooleanField(default=False)
     creator = models.ForeignKey(User, null=True, related_name='crator', on_delete=models.CASCADE)
+
+    objects = models.Manager()
+    active_objects = TaskManagerActive()
+    done_objects = TaskManagerDone()
 
     class Meta:
         ordering = ('created_at',)

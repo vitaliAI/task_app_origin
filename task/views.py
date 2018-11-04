@@ -10,8 +10,22 @@ from django.views.generic import (
 )
 
 
-class TaskListView(LoginRequiredMixin, ListView):
-    model = Task
+class TaskListViewActive(LoginRequiredMixin, ListView):
+    queryset = Task.active_objects.all()
+    template_name = 'task/task-list.html'
+    context_object_name = 'tasks'
+    ordering = ['-created_at']
+
+
+class TaskListViewDone(LoginRequiredMixin, ListView):
+    queryset = Task.done_objects.all()
+    template_name = 'task/task-list.html'
+    context_object_name = 'tasks'
+    ordering = ['-created_at']
+
+
+class TaskListViewAll(LoginRequiredMixin, ListView):
+    queryset = Task.objects.all()
     template_name = 'task/task-list.html'
     context_object_name = 'tasks'
     ordering = ['-created_at']
@@ -23,7 +37,7 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
 
 class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
-    fields = ['title', 'description']
+    fields = ['title', 'description', 'is_finished']
 
     def form_valid(self, form):
         form.instance.creator = self.request.user
@@ -31,7 +45,7 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
 
 class TaskUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Task
-    fields = ['title', 'description']
+    fields = ['title', 'description', 'is_finished']
 
     def form_valid(self, form):
         form.instance.creator = self.request.user
@@ -42,6 +56,9 @@ class TaskUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         if self.request.user == task.creator:
             return True
         return False
+
+    def get_success_url(self):
+        return reverse('task:task-list')
 
 class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Task
