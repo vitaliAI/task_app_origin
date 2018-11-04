@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from accounts.forms import LoginForm, RegistrationForm
@@ -14,14 +14,15 @@ def login_view(request):
             )
 
             if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    # Vitali in Development -> Redirect to Home View
-                    return redirect('/')
+                login(request, user)
+                # Vitali in Development -> Redirect to Home View
+                return redirect(reverse('accounts:accounts_login'))
             else:
                 return render(request, 'accounts/login.html', {'form': form})
     else:
         return render(request, 'accounts/login.html', {'form': LoginForm()})
+
+    return redirect(reverse('accounts:accounts_login'))
 
 
 def register(request):
@@ -33,7 +34,7 @@ def register(request):
                 email=request.POST.get('email'),
                 password=request.POST.get('password')
             )
-            return redirect('/')
+            return redirect(reverse('accounts:accounts_login'))
         else:
             return render(request, 'accounts/register.html', {'form': form})
     else:
@@ -43,4 +44,4 @@ def register(request):
 def logout_view(request):
     logout(request)
     # Vitali in Development -> Redirect to Home View
-    return redirect('/')
+    return redirect(reverse('accounts:accounts_login'))

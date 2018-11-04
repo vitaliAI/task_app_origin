@@ -1,0 +1,16 @@
+{% extends "task/base.html" %}
+{% block content %}
+    {% for task in tasks %}
+        <article class="media content-section">
+            <img class="rounded-circle article-img" src="{{ task.creator.profile.image.url }}">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ task.creator }}</a>
+              <small class="text-muted">{{ task.created_at|date:"F d, Y" }}</small>
+            </div>
+            <h2><a class="article-title" href="#">{{ task.title }}</a></h2>
+            <p class="article-content">{{ task.description }}</p>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}

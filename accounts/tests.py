@@ -17,6 +17,7 @@ class AccountsTest(TestCase):
 
         User.objects.create_user('test', 'test@example.com', 'test')
 
+
     def tearDown(self):
         User.objects.get(username='test').delete()
 
@@ -36,7 +37,7 @@ class AccountsTest(TestCase):
             data=self.register_data
         )
         # TODO Later
-        self.assertRedirects(response, '/')
+        self.assertRedirects(response, reverse('accounts:accounts_login'))
         # New user has been cerated
         self.assertIsNotNone(User.objects.get(username='test_user'))
 
@@ -44,12 +45,35 @@ class AccountsTest(TestCase):
         # No user is logged in
         self.assertFalse('_auth_user_id' in self.client.session)
         login_data = {'username': 'test', 'password': 'test'}
-        response = self.client.post('accounts/login.html',
+        response = self.client.post(reverse('accounts:accounts_login'),
                                     data=login_data)
         # TODO
-        #self.assertRedirects(response, '/')
+        self.assertRedirects(response, reverse('accounts:accounts_login'))
         # User is logged in
-        #self.assertEqual(self.client.session['_auth_user_id'], '1')
+        self.assertEqual(self.client.session['_auth_user_id'], '1')
+
+    def test_login_with_non_existent_user(self):
+        login_data = {'username': 'test4', 'password': 'test'}
+        response = self.client.post(reverse('accounts:accounts_login'),
+                                    data=login_data)
+        self.assertFalse('_auth_user_id' in self.client.session)
+        self.assertRedirects(response, reverse('accounts:accounts_login'))
+
+    def test_login_with_wrong_passord(self):
+        login_data = {'username': 'test', 'password': 'test12'}
+        response = self.client.post(reverse('accounts:accounts_login'),
+                                    data=login_data)
+        self.assertFalse('_auth_user_id' in self.client.session)
+        # TODO test validation form
+        self.assertRedirects(response, reverse('accounts:accounts_login'))
+        error_message = 'Incorrect username and/or password.'
+        self.assertContains(response, error_message, status_code=200)
+
+
+
+
+
+
 
 
 
