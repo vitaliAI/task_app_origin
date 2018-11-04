@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.urls import reverse
 
 
 class Task(models.Model):
@@ -26,3 +27,6 @@ class Task(models.Model):
         self.is_finished = False
         self.finished_at = None
         self.save()
+
+    def get_absolute_url(self):
+        return reverse('task:task-detail', kwargs={'pk': self.pk})

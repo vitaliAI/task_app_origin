@@ -15,14 +15,13 @@ def login_view(request):
 
             if user is not None:
                 login(request, user)
-                # Vitali in Development -> Redirect to Home View
-                return redirect(reverse('accounts:accounts_login'))
+                return redirect(reverse('task:task-list'))
             else:
                 return render(request, 'accounts/login.html', {'form': form})
     else:
         return render(request, 'accounts/login.html', {'form': LoginForm()})
 
-    return redirect(reverse('accounts:accounts_login'))
+    return redirect(reverse('task:task-list'))
 
 
 def register(request):
